@@ -32,10 +32,8 @@ for word in cur_list:
         letterCount[letter] += 1
 
 out_letter = []
-yellow_letter = {}
-green_letter = {}
-
-time.sleep(2)
+yellow_letter = []
+green_letter = []
 
 def sendWord(wordle):
     actions = ActionChains(driver)
@@ -44,18 +42,32 @@ def sendWord(wordle):
     actions.perform()
 
 for i in range(6):
+    time.sleep(1)
     wordle = getBestWord(cur_list, letterCount)
     sendWord(wordle)
-    
-    res = getFeedback(driver)
-    for i in res[2]:
-        if i not in out_letter:
-            out_letter.append(i)
-    yellow_letter = yellow_letter + res[0]
-    green_letter = green_letter + res[1]
-    
-    
+    time.sleep(1)
+
+    res = getFeedback(i, driver)
+    time.sleep(1)
+
+    for item in res[0]:
+        if item not in out_letter:
+            out_letter.append(item)
+
+    for item in res[1]:
+        if item not in yellow_letter:
+            yellow_letter.append(item)
+
+    for item in res[2]:
+        if item not in green_letter:
+            green_letter.append(item)
+
+    print(out_letter,yellow_letter,green_letter)
+
+    tobedeleted = []
     for word in cur_list:
         if filterWords(word, yellow_letter, green_letter, out_letter):
-            cur_list.remove(word)
-    
+            tobedeleted.append(word)
+
+    for item in tobedeleted:
+        cur_list.remove(item)

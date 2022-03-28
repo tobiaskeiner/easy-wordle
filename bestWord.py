@@ -8,6 +8,6 @@ def getBestWord(list, letterCount):
                 scores += letterCount[letter.upper()]
                 word_letters.append(letter)
         list_scores[word] = scores
-    list_scores
+
     return max(list_scores, key=list_scores.get)
     
